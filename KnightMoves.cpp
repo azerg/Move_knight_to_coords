@@ -43,7 +43,18 @@ std::ostream& operator<<(std::ostream& os, const Direction& direction)
 
 struct Point
 {
+  Point() = default;
+  Point(int x, int y) :
+    x{x},
+    y{y}
+  {}
+
   int x, y;
+
+  Point operator+(Point pt) noexcept
+  {
+    return Point(this->x + pt.x, this->y + pt.y);
+  }
 };
 
 struct ChessMove
@@ -69,9 +80,22 @@ uint64_t DistanceBetween(const Point& pt1, const Point& pt2)
   return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
 }
 
-ChessMove FindCloserMove(const Point& pt1, const Point& pt2)
+ChessMove FindCloserMove(const Point& ptFrom, const Point& ptTo)
 {
-  return movesCoords[0];
+  ChessMove move{};
+  uint64_t minDistance = std::numeric_limits<uint64_t>::max();
+
+  for (auto& coord : movesCoords)
+  {
+    auto curDistance = DistanceBetween(Point(ptFrom) + coord.pt, ptTo);
+    if (curDistance < minDistance)
+    {
+      minDistance = curDistance;
+      move = coord;
+    }
+  }
+
+  return move;
 }
 
 Point MoveCloser(const Point& currentPt, const Point& destPt)
@@ -80,14 +104,19 @@ Point MoveCloser(const Point& currentPt, const Point& destPt)
 
   CONSOLE("direction:" << move.direction);
 
-  return {currentPt.x + move.pt.x, currentPt.y + move.pt.y};
+  return Point(currentPt) + move.pt;
 }
 
 int main()
 {
   Point pt1{0,0};
-  Point pt2{2,1};
+  Point pt2{25,15};
 
-  std::cout << DistanceBetween(pt1, pt2);
+  Point stepPt = pt1;
+  do
+  {
+    stepPt = MoveCloser(stepPt, pt2);
+  } while (stepPt.x != 0);
+  
 }
 
