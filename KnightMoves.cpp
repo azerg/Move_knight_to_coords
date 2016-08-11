@@ -1,4 +1,4 @@
-// KnightMoves.cpp : Defines the entry point for the console application.
+﻿// KnightMoves.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -59,9 +59,16 @@ struct Point
 
 struct ChessMove
 {
-  // 'x' and 'y' coordinates on chess board
+  // coordinates on chess board
   Point pt;
   Direction direction;
+
+  ChessMove& operator=(const ChessMove& right)
+  {
+    pt = right.pt;
+    direction = right.direction;
+    return *this;
+  }
 };
 
 ChessMove movesCoords[8] = {
@@ -101,22 +108,60 @@ ChessMove FindCloserMove(const Point& ptFrom, const Point& ptTo)
 Point MoveCloser(const Point& currentPt, const Point& destPt)
 {
   auto move = FindCloserMove(currentPt, destPt);
+  move.pt = move.pt + currentPt; // doing move
 
-  CONSOLE("direction:" << move.direction);
+  CONSOLE(move.direction << " (" << DistanceBetween(move.pt, destPt) << ")");
 
-  return Point(currentPt) + move.pt;
+  return move.pt;
+}
+
+uint64_t CalculateMoves(Point destPt)
+{
+  Point stepPt{};
+  uint64_t stepsCount{};
+
+  do
+  {
+    stepPt = MoveCloser(stepPt, destPt);
+    ++stepsCount;
+
+    auto distance = DistanceBetween(stepPt, destPt);
+
+    if (distance == 0) // oeps we did it
+    {
+      //
+      break;
+    }
+    else if (distance == 1)
+    {
+      /*
+      *   . . .                                       |  . . .
+      *   . x . -> 2 moves left to get to dest point  |  . x . -> 3 moves left
+      *   x . .                                       |  . x .
+      */
+      if (stepPt.x == destPt.x || stepPt.y == destPt.y)
+      {
+        // + 3 moves
+        stepsCount += 3;
+        CONSOLE("We stopped moving and are staying _not diagonally_ to the destination point. So 3 moves left.")
+      }
+      else
+      {
+        // + 2 moves
+        stepsCount += 2;
+        CONSOLE("We stopped moving and are staying _diagonally_ to the destination point. So 2 moves left.")
+      }
+      break;
+    }
+
+  } while (stepPt.x != 0);
+
+  return stepsCount;
 }
 
 int main()
 {
-  Point pt1{0,0};
-  Point pt2{25,15};
-
-  Point stepPt = pt1;
-  do
-  {
-    stepPt = MoveCloser(stepPt, pt2);
-  } while (stepPt.x != 0);
-  
+  auto stepsCount = CalculateMoves({250,-2});
+  CONSOLE("Reached target in " << stepsCount << " steps.");
 }
 
