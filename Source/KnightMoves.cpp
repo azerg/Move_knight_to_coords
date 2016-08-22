@@ -1,7 +1,4 @@
-﻿// KnightMoves.cpp : Defines the entry point for the console application.
-//
-
-#include <iostream>
+﻿#include <iostream>
 #include <cstdint>
 #include <cassert>
 #include <math.h>
@@ -81,8 +78,11 @@ ChessMove movesCoords[8] = {
   {{2,-1}, Direction::BottomRight}
 };
 
+uint64_t numberOfComparings{};
+
 uint64_t DistanceBetween(const Point& pt1, const Point& pt2)
 {
+  ++numberOfComparings;
   return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
 }
 
@@ -116,6 +116,7 @@ Point MoveCloser(const Point& currentPt, const Point& destPt)
 
 uint64_t CalculateMoves(Point destPt)
 {
+  CONSOLE("Looking for a way to: {" << destPt.x << ", " << destPt.y << "}");
   Point stepPt{};
   uint64_t stepsCount{};
 
@@ -153,14 +154,21 @@ uint64_t CalculateMoves(Point destPt)
       break;
     }
 
-  } while (stepPt.x != 0);
+  } while (true);
 
   return stepsCount;
 }
 
-int main()
+int main(int agrc, char* argv[])
 {
-  auto stepsCount = CalculateMoves({250,-2});
-  CONSOLE("Reached target in " << stepsCount << " steps.");
+  if (agrc != 3)
+  {
+    CONSOLE("Usage: <dest X coord> <dest Y coord>\n"
+            "Coords are expected to be a values of integer.");
+    return -1;
+  }
+
+  auto stepsCount = CalculateMoves({atoi(argv[1]),atoi(argv[2])});
+  CONSOLE("Reached target in " << stepsCount << " steps. Comparings done: " << numberOfComparings);
 }
 
