@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <cstdint>
 #include <cassert>
+#include <limits>
 #include <math.h>
 
 #define CONSOLE(message) std::cout << message << std::endl;
