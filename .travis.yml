@@ -8,4 +8,4 @@ before_script:
 script:
   - make
   - cd ../bin
-  - ./KnightMoves 250 -2
+  - ./KnightMoves

@@ -118,7 +118,7 @@ Point MoveCloser(const Point& currentPt, const Point& destPt)
 uint64_t CalculateMoves(Point destPt)
 {
   CONSOLE("Looking for a way to: {" << destPt.x << ", " << destPt.y << "}");
-  Point stepPt{};
+  Point stepPt(0,0);
   uint64_t stepsCount{};
 
   do
@@ -166,7 +166,7 @@ int main(int agrc, char* argv[])
   {
     CONSOLE("Usage: <dest X coord> <dest Y coord>\n"
             "Coords are expected to be a values of integer.");
-    return -1;
+    return 0;
   }
 
   auto stepsCount = CalculateMoves({atoi(argv[1]),atoi(argv[2])});
