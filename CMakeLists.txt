@@ -9,4 +9,9 @@ endif()
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/bin)
 
-add_subdirectory (Source)
+enable_testing()
+
+include_directories(include)
+
+add_subdirectory (src)
+add_subdirectory (test)

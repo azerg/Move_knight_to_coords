@@ -1,8 +1,7 @@
 Move knight to coordinates
 =========
 An algorithm of moving knight in chess.
-
-# ![Build Status](https://travis-ci.org/azerg/Move_knight_to_coords.svg)
+# [![Build Status](https://travis-ci.org/azerg/Move_knight_to_coords.png )] ( https://travis-ci.org/azerg/Move_knight_to_coords)
 
 ### Task:
 * Calculate number of moves required by chess knight to move from (0,0) to definite coordinates.

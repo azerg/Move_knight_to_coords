@@ -3,16 +3,9 @@
 #include <cassert>
 #include <limits>
 #include <math.h>
+#include "KnightMoves.h"
 
 #define CONSOLE(message) std::cout << message << std::endl;
-
-enum class Direction
-{
-  BottomRight,
-  TopRight,
-  TopLeft,
-  BottomLeft
-};
 
 std::ostream& operator<<(std::ostream& os, const Direction& direction)
 {
@@ -37,22 +30,6 @@ std::ostream& operator<<(std::ostream& os, const Direction& direction)
 
   return os;
 }
-
-struct Point
-{
-  Point() = default;
-  Point(int x, int y) :
-    x{x},
-    y{y}
-  {}
-
-  int x, y;
-
-  Point operator+(Point pt) noexcept
-  {
-    return Point(this->x + pt.x, this->y + pt.y);
-  }
-};
 
 struct ChessMove
 {
@@ -115,11 +92,12 @@ Point MoveCloser(const Point& currentPt, const Point& destPt)
   return move.pt;
 }
 
-uint64_t CalculateMoves(Point destPt)
+Result CalculateMoves(Point destPt)
 {
   CONSOLE("Looking for a way to: {" << destPt.x << ", " << destPt.y << "}");
   Point stepPt(0,0);
   uint64_t stepsCount{};
+  numberOfComparings = 0;
 
   do
   {
@@ -157,19 +135,6 @@ uint64_t CalculateMoves(Point destPt)
 
   } while (true);
 
-  return stepsCount;
-}
-
-int main(int agrc, char* argv[])
-{
-  if (agrc != 3)
-  {
-    CONSOLE("Usage: <dest X coord> <dest Y coord>\n"
-            "Coords are expected to be a values of integer.");
-    return 0;
-  }
-
-  auto stepsCount = CalculateMoves({atoi(argv[1]),atoi(argv[2])});
-  CONSOLE("Reached target in " << stepsCount << " steps. Comparings done: " << numberOfComparings);
+  return{numberOfComparings, stepsCount};
 }
 
