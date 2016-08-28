@@ -8,5 +8,3 @@ before_script:
 script:
   - make
   - make test
-  - cd ../bin
-  - ./test
