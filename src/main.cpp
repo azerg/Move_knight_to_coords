@@ -13,6 +13,6 @@ int main(int agrc, char* argv[])
   }
 
   auto result = CalculateMoves({atoi(argv[1]),atoi(argv[2])});
-  CONSOLE("Reached target in " << result.stepsCount << " steps. Comparings done: " << result.numberOfComparings);
+  //CONSOLE("Reached target in " << result.stepsCount << " steps. Comparings done: " << result.numberOfComparings);
 }
 

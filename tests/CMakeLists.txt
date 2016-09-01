@@ -1,6 +1,6 @@
 project(tests)
 
-set(sources test.cpp ${CMAKE_SOURCE_DIR}/src/KnightMoves.cpp)
+set(sources test.cpp ${CMAKE_SOURCE_DIR}/src/KnightMoves.cpp ${CMAKE_SOURCE_DIR}/src/privilegedMoves.cpp)
 add_executable(tests ${sources})
 
 add_test(NAME "{0,0}" COMMAND tests "0" "0")

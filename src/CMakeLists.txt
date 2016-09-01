@@ -1,1 +1,1 @@
-add_executable (KnightMoves main.cpp KnightMoves.cpp)
+add_executable (KnightMoves main.cpp KnightMoves.cpp privilegedMoves.cpp)
