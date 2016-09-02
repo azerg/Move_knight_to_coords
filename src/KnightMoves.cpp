@@ -61,8 +61,7 @@ uint64_t DistanceBetween(const Point& pt1, const Point& pt2)
 
 bool IsInSameQuart(Point pt1, Point pt2)
 {
-  typedef decltype(pt1.x) coordT;
-  auto CoordsInSameQuart = [](coordT coord1, coordT coord2) -> bool
+  auto CoordsInSameQuart = [](auto coord1, auto coord2) -> bool
   {
     return (coord1 > 0 && coord2 > 0) || (coord1 < 0 && coord2 < 0);
   };
