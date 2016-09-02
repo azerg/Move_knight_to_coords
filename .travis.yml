@@ -1,10 +1,20 @@
 language: cpp
-compiler:
-  - gcc
+
+matrix:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=g++-5
+      
 before_script:
   - mkdir build
   - cd build
   - cmake ..
+  
 script:
   - make
   - make test
