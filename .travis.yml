@@ -8,7 +8,6 @@ matrix:
         apt:
           packages:
             - g++-6
-            - valgrind
           sources:
             - ubuntu-toolchain-r-test
 
