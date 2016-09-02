@@ -30,6 +30,7 @@ An algorithm of moving knight in chess.
 #### v 0.2:
 + using predefined direction as long as possible
 + same line optimization.
+
 | Coords    |   Steps   |   Comparings |
 | :------------: |:----------------:|:---------------:|
 |{0, 0}|                2 |              21
